@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <style>
+        /* CSS for the sidebar */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: black;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #007bff;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        /* Style the button that opens the sidebar */
+        #openCartBtn {
+            font-size: 20px;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+
+        /* Style the content */
+        #main {
+            transition: margin-right .5s;
+            padding: 16px;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .title {
+            flex: 1;
+        }
+
+        .quantity button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .quantity span {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar start -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active mx-5" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-5" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-5" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="openCartBtn" class="nav-link" href="#">
+                            <i class="fas fa-shopping-cart"></i> <span id="cartCount">0</span> items
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Cards start -->
+    <div class="container" id="main">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="b1.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary addToCartBtn" data-product="1">Add To Cart</button>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="b2.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary addToCartBtn" data-product="2">Add To Cart</button>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="b3.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary addToCartBtn" data-product="3">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="cartSidebar">
+        <a class="closebtn">×</a>
+        <div id="cartItems">
+            <!-- Cart items will be added here dynamically -->
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-T/hmJjFzF9wuJ2Kv2b1zBhqJezlK5ZjNnuNlMjUAt6eLyTlnRLV2vpkzPE9IaCNZ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var cartCount = 0;
+
+            $(".addToCartBtn").click(function () {
+                var productId = $(this).data("product");
+                var cartItem = $("#cartItems").find("[data-product-id='" + productId + "']");
+
+                if (cartItem.length) {
+                    // If product is already in the cart, increase its quantity
+                    var quantityElement = cartItem.find(".quantity span");
+                    var quantity = parseInt(quantityElement.text());
+                    quantity++;
+                    quantityElement.text(quantity);
+                } else {
+                    // If product is not in the cart, add it
+                    cartCount++;
+                    $("#cartCount").text(cartCount);
+
+                    var productName = "Product " + productId; // Replace with actual product name
+                    var imageUrl = "b" + productId + ".jpg"; // Dynamic image URL
+                    var listItem = "<div class='item' data-product-id='" + productId + "'><img src='" + imageUrl + "' alt='product-image'><span class='title'>" + productName + "</span><div class='quantity'><button class='minus'>-</button><span>1</span><button class='plus'>+</button></div></div>";
+                    $("#cartItems").append(listItem);
+                }
+            });
+
+            // Open the sidebar when cart icon is clicked
+            $("#openCartBtn").click(function () {
+                openCart();
+            });
+
+            // Close the sidebar when close button is clicked
+            $(".closebtn").click(function () {
+                closeCart();
+            });
+
+            // Function to open the sidebar
+            function openCart() {
+                $("#cartSidebar").css("width", "300px");
+                $("#main").css("margin-right", "300px");
+            }
+
+            // Function to close the sidebar
+            function closeCart() {
+                $("#cartSidebar").css("width", "0");
+                $("#main").css("margin-right", "0");
+            }
+
+            // Event delegation for plus and
+            $("#cartItems").on("click", ".minus", function () {
+            var quantityElement = $(this).next();
+            var quantity = parseInt(quantityElement.text());
+            if (quantity > 1) {
+                quantity--;
+                quantityElement.text(quantity);
+            } else {
+                // If quantity is 1 or less, remove the item from the cart
+                var item = $(this).closest('.item');
+                item.remove();
+                cartCount--;
+                $("#cartCount").text(cartCount);
+            }
+        });
+    });
+</script>
